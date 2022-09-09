@@ -1,26 +1,37 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import logo from './logo.svg';
-import './App.css';
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+} from "react-router-dom";
+import Startpage from './pages/startpage/Startpage';
+
+
+type SurveyInfo = {
+    suryeyId: number | null;
+}
+
+const SurveyContext = React.createContext<SurveyInfo>({
+    suryeyId: null
+})
+
+export function useSurveyInfo() {
+    return useContext(SurveyContext);
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [surveyId, setSurveyId] = useState<number | null>(null);
+    
+    return (
+        <SurveyContext.Provider value={{suryeyId: surveyId}}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path={"/"} element={<Startpage/>}/>
+                </Routes>
+            </BrowserRouter>
+        </SurveyContext.Provider>
+    );
 }
 
 export default App;
