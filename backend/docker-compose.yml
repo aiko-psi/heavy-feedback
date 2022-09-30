@@ -1,0 +1,13 @@
+version: "3.4"
+
+services: 
+  database:
+    image: 'postgres:latest'
+    ports:
+      - 5435:5432
+
+    environment:
+      POSTGRES_USER: heavyuser
+      POSTGRES_PASSWORD: secretOnly4Dev3lopment
+      POSTGRES_DB: heavy_feedback
+
