@@ -4,9 +4,11 @@ import de.heavy_feedback.plugins.configureHTTP
 import de.heavy_feedback.plugins.configureRouting
 import de.heavy_feedback.plugins.configureSecurity
 import de.heavy_feedback.plugins.configureSerialization
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 import org.ktorm.database.Database
 
 fun main(args: Array<String>): Unit =
@@ -31,5 +33,4 @@ fun Application.module() {
             call.respondText { "Yes it works!" }
         }
     }
-
 }

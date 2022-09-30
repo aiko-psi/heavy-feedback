@@ -1,10 +1,11 @@
 package de.heavy_feedback.plugins
 
-import io.ktor.http.*
-import io.ktor.server.locations.*
-import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.application.*
-import io.ktor.server.response.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.locations.Locations
+import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.response.respond
 
 fun Application.configureRouting() {
     install(Locations) {
@@ -17,9 +18,7 @@ fun Application.configureRouting() {
         exception<AuthorizationException> { call, cause ->
             call.respond(HttpStatusCode.Forbidden)
         }
-
     }
-
 }
 class AuthenticationException : RuntimeException()
 class AuthorizationException : RuntimeException()

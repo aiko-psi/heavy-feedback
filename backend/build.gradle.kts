@@ -7,6 +7,8 @@ plugins {
     kotlin("jvm") version "1.7.10"
     id("io.ktor.plugin") version "2.1.1"
     id("org.flywaydb.flyway") version "9.4.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
 }
 
 group = "de.heavy_feedback"
