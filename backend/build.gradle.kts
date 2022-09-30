@@ -6,6 +6,7 @@ plugins {
     application
     kotlin("jvm") version "1.7.10"
     id("io.ktor.plugin") version "2.1.1"
+    id("org.flywaydb.flyway") version "9.4.0"
 }
 
 group = "de.heavy_feedback"
@@ -37,6 +38,8 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("org.ktorm:ktorm-core:3.5.0")
+    implementation("org.postgresql:postgresql:42.5.0")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }

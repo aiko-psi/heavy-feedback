@@ -7,6 +7,7 @@ import de.heavy_feedback.plugins.configureSerialization
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.ktorm.database.Database
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -17,6 +18,13 @@ fun Application.module() {
     configureHTTP()
     configureSerialization()
     configureRouting()
+
+    // Connect database without DI, connection user and pw only for development docker db atm
+    val database = Database.connect(
+        "jdbc:postgresql://localhost:5435/postgres",
+        user = "heavyuser",
+        password = "secretOnly4Dev3lopment"
+    )
 
     routing {
         get("/") {
