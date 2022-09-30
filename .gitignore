@@ -26,6 +26,5 @@ yarn-error.log*
 .vscode
 
 # intellij
-.idea
 *.iml
 
