@@ -6,9 +6,13 @@ import de.heavy_feedback.plugins.configureSecurity
 import de.heavy_feedback.plugins.configureSerialization
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
+import io.ktor.server.application.install
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
+import org.koin.ksp.generated.module
+import org.koin.ktor.plugin.Koin
+import org.koin.logger.slf4jLogger
 import org.ktorm.database.Database
 
 fun main(args: Array<String>): Unit =
@@ -20,6 +24,11 @@ fun Application.module() {
     configureHTTP()
     configureSerialization()
     configureRouting()
+
+    install(Koin) {
+        slf4jLogger()
+        modules(AppModule().module)
+    }
 
     // Connect database without DI, connection user and pw only for development docker db atm
     val database = Database.connect(

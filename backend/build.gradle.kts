@@ -9,6 +9,18 @@ plugins {
     id("org.flywaydb.flyway") version "9.4.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
+    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
+}
+
+// KSP - To use generated sources
+sourceSets.main {
+    java.srcDirs("build/generated/ksp/main/kotlin")
+}
+
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    filter {
+        exclude { it.file.path.contains("$buildDir/generated/") }
+    }
 }
 
 group = "de.heavy_feedback"
@@ -42,6 +54,15 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("org.ktorm:ktorm-core:3.5.0")
     implementation("org.xerial:sqlite-jdbc:3.39.3.0")
+    // Koin DI
+    implementation("io.insert-koin:koin-core:3.2.2")
+    implementation("io.insert-koin:koin-ktor:3.2.2")
+    implementation("io.insert-koin:koin-annotations:1.0.3")
+    implementation("io.insert-koin:koin-logger-slf4j:3.2.2")
+    ksp("io.insert-koin:koin-ksp-compiler:1.0.3")
+
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    testImplementation("io.insert-koin:koin-test:3.2.2")
+    testImplementation("io.insert-koin:koin-test-junit4:3.2.2")
 }
