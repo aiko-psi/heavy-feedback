@@ -23,9 +23,7 @@ fun Application.module() {
 
     // Connect database without DI, connection user and pw only for development docker db atm
     val database = Database.connect(
-        "jdbc:postgresql://localhost:5435/postgres",
-        user = "heavyuser",
-        password = "secretOnly4Dev3lopment"
+        "jdbc:sqlite:heavyfeedback.sqlite"
     )
 
     routing {
