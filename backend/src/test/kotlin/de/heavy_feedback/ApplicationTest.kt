@@ -1,6 +1,5 @@
 package de.heavy_feedback
 
-import de.heavy_feedback.plugins.configureRouting
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
@@ -11,12 +10,9 @@ import kotlin.test.assertEquals
 class ApplicationTest {
     @Test
     fun testRoot() = testApplication {
-        application {
-            configureRouting()
-        }
         client.get("/").apply {
             assertEquals(HttpStatusCode.OK, status)
-            assertEquals("Hello World!", bodyAsText())
+            assertEquals("Yes it works!", bodyAsText())
         }
     }
 }
