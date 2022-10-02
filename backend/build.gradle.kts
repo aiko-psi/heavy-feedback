@@ -43,6 +43,7 @@ dependencies {
     implementation("io.ktor:ktor-server-locations-jvm:$ktor_version")
     implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-client-apache-jvm:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-status-pages-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-cors-jvm:$ktor_version")
@@ -52,8 +53,11 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktor_version")
     implementation("org.ktorm:ktorm-core:3.5.0")
     implementation("org.xerial:sqlite-jdbc:3.39.3.0")
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.0")
+
     // Koin DI
     implementation("io.insert-koin:koin-core:3.2.2")
     implementation("io.insert-koin:koin-ktor:3.2.2")
