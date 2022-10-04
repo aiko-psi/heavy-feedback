@@ -52,11 +52,14 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-jackson-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktor_version")
     implementation("org.ktorm:ktorm-core:3.5.0")
     implementation("org.xerial:sqlite-jdbc:3.39.3.0")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.0")
+
+    // logging
+    implementation("org.slf4j:slf4j-api:2.0.1")
+    implementation("ch.qos.logback:logback-classic:1.4.3")
 
     // Koin DI
     implementation("io.insert-koin:koin-core:3.2.2")
