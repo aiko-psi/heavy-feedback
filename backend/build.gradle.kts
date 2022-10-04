@@ -55,6 +55,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktor_version")
     implementation("org.ktorm:ktorm-core:3.5.0")
     implementation("org.xerial:sqlite-jdbc:3.39.3.0")
+    implementation("org.flywaydb:flyway-core:9.4.0")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.0")
 
     // logging
