@@ -1,7 +1,9 @@
 package de.heavy_feedback.easyfeedbackconnection
 
+import de.heavy_feedback.easyfeedbackconnection.model.ContainerFromPreviewDAO
 import de.heavy_feedback.easyfeedbackconnection.model.PageFromPreviewDAO
 import de.heavy_feedback.easyfeedbackconnection.model.PreviewApiResponse
+import de.heavy_feedback.easyfeedbackconnection.model.SurveyInfoFromPreview
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.apache.Apache
@@ -32,19 +34,34 @@ class EasyFeedbackPreviewRepository {
         }
     }
 
-    suspend fun getSurveyInfo(surveyUrl: String): List<PageFromPreviewDAO> {
+    suspend fun getSurveyInfo(surveyUrl: String): SurveyInfoFromPreview {
         val previewUrl = convertToPreviewUrl(surveyUrl)
         val token = getApiToken(previewUrl)
 
         var hasNext = true
         var pageList = listOf<PageFromPreviewDAO>()
+        var surveyId: Int? = null
+        var surveyTitle: String? = null
+
         while (hasNext) {
-            val page = getNextPage(token)
+            val container = getNextPage(token)
+            val page = container.process.page
             pageList = pageList.plus(page)
             hasNext = !page.isLastPage
+
+            surveyId = surveyId ?: container.survey.id
+            surveyTitle = surveyTitle ?: container.survey.title
         }
         logger.debug { "${pageList.size} pages successfully found." }
-        return pageList
+        if (surveyId == null) {
+            throw error("SurveyId not found")
+        }
+
+        return SurveyInfoFromPreview(
+            id = surveyId,
+            title = surveyTitle,
+            pages = pageList
+        )
     }
 
     fun convertToPreviewUrl(surveyUrl: String): String {
@@ -63,13 +80,13 @@ class EasyFeedbackPreviewRepository {
             ?: throw error("Token not fount in content.")
     }
 
-    private suspend fun getNextPage(token: String): PageFromPreviewDAO {
+    private suspend fun getNextPage(token: String): ContainerFromPreviewDAO {
         val response: PreviewApiResponse = client.get(PAGE_PREVIEW_URL) {
             headers {
                 append(MEMBER_TOKEN_HEADER_Name, token)
                 contentType(ContentType.Application.Json)
             }
         }.body()
-        return response.efContainer.process.page
+        return response.efContainer
     }
 }

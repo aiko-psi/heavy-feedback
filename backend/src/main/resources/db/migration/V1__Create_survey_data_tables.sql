@@ -1,18 +1,23 @@
-create table PAGE (
+create table SURVEYS (
     ID int primary key,
-    TITLE varchar(100),
+    title text
+);
+
+create table PAGES (
+    ID int primary key,
+    TITLE text,
     pos int not null
 );
 
-create table QUESTION (
+create table QUESTIONS (
     ID int primary key,
-    TYPE varchar(100) not null,
+    TYPE text not null,
     IS_REQUIRED boolean,
     IS_REVERSE boolean,
-    TITLE varchar(500) not null,
-    NOTE varchar(500),
-    TOOLTIP varchar(500),
-    PAGE_ID references PAGE(ID)
+    TITLE text not null,
+    NOTE text,
+    TOOLTIP text,
+    PAGE_ID references PAGEs(ID)
 );
 
 

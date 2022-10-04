@@ -10,6 +10,13 @@ data class PreviewApiResponse(
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ContainerFromPreviewDAO(
     val process: ProcessInfoFromPreviewDAO,
+    val survey: SurveyInfoFromPreviewDAO,
+)
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class SurveyInfoFromPreviewDAO(
+    val id: Int,
+    val title: String?,
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -30,7 +37,7 @@ data class PageFromPreviewDAO(
 data class PageElement(
     val id: Int,
     val type: String,
-    val isReverse: Boolean?,
+    val isReverse: Boolean,
     val isRequired: Boolean,
     val title: String,
     val note: String?,
