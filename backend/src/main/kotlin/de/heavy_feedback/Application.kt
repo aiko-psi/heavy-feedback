@@ -12,6 +12,7 @@ import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 import org.koin.ksp.generated.module
+import org.koin.ktor.ext.getKoin
 import org.koin.ktor.plugin.Koin
 import org.ktorm.database.Database
 
@@ -25,11 +26,17 @@ fun Application.module() {
     configureSerialization()
     configureRouting()
 
+    // Use the ktor config and put it in koin to make it available to all components
+    val configMap: Map<String, Any> = environment.config.toMap()
+        .mapNotNull { (key, value) -> if (value != null) key to value else null }
+        .toMap()
+
     install(Koin) {
         modules(AppModule().module)
+        properties(configMap)
     }
 
-    // Connect database without DI, connection user and pw only for development docker db atm
+    // Connect database without DI, connection user and pw only for development db atm
     val database = Database.connect(
         "jdbc:sqlite:heavyfeedback.sqlite"
     )

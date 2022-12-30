@@ -7,6 +7,7 @@ import org.junit.After
 import org.junit.Before
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.fileProperties
 import org.koin.ksp.generated.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
@@ -18,14 +19,17 @@ class EasyFeedbackPreviewRepositoryTest : KoinTest {
 
     private val easyFeedbackPreviewRepository: EasyFeedbackPreviewRepository by inject()
 
-    private val workingTestUrl = System.getenv("WORKING_TEST_URL")
-    private val workingOriginalUrl = System.getenv("WORKING_ORIGINAL_URL")
+    private var workingTestUrl: String? = null
+    private var workingOriginalUrl: String? = null
 
     @Before
     fun initialiseTest() {
         startKoin {
             modules(AppModule().module)
+            fileProperties()
         }
+        workingTestUrl = getKoin().getProperty("workingTestUrl")
+        workingOriginalUrl = getKoin().getProperty("workingOriginalUrl")
     }
 
     @After
@@ -35,22 +39,25 @@ class EasyFeedbackPreviewRepositoryTest : KoinTest {
 
     @Test
     fun getPreviewUrl_validUrl_returnCorrectUrl() {
-        val result = easyFeedbackPreviewRepository.convertToPreviewUrl(workingOriginalUrl)
+        assertNotNull(workingOriginalUrl)
+        val result = easyFeedbackPreviewRepository.convertToPreviewUrl(workingOriginalUrl!!)
         assertEquals(workingTestUrl, result)
     }
 
     @Test
     fun getApiToken_validUrl_returnApiToken() {
+        assertNotNull(workingOriginalUrl)
         runBlocking {
-            val result = easyFeedbackPreviewRepository.getApiToken(workingTestUrl)
+            val result = easyFeedbackPreviewRepository.getApiToken(workingTestUrl!!)
             assertNotNull(result)
         }
     }
 
     @Test
     fun getSurveyInfo_validUrl_returnPagesWithQuestions() {
+        assertNotNull(workingOriginalUrl)
         runBlocking {
-            val result = easyFeedbackPreviewRepository.getSurveyInfo(workingTestUrl)
+            val result = easyFeedbackPreviewRepository.getSurveyInfo(workingTestUrl!!)
             assertEquals(2, result.pages.size)
         }
     }
