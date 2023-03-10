@@ -58,7 +58,7 @@ class EasyFeedbackPreviewRepositoryTest : KoinTest {
         assertNotNull(workingOriginalUrl)
         runBlocking {
             val result = easyFeedbackPreviewRepository.getSurveyInfo(workingTestUrl!!)
-            assertEquals(2, result.pages.size)
+            assertEquals(8, result.pages.size)
         }
     }
 }
