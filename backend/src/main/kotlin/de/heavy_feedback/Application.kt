@@ -13,7 +13,6 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 import org.koin.ksp.generated.module
 import org.koin.ktor.plugin.Koin
-import org.koin.logger.slf4jLogger
 import org.ktorm.database.Database
 
 fun main(args: Array<String>): Unit =
@@ -27,7 +26,6 @@ fun Application.module() {
     configureRouting()
 
     install(Koin) {
-        slf4jLogger()
         modules(AppModule().module)
     }
 
