@@ -4,7 +4,7 @@ val logback_version: String by project
 
 plugins {
     application
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm")
     id("io.ktor.plugin") version "2.1.1"
     id("org.flywaydb.flyway") version "9.4.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
@@ -54,23 +54,23 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktor_version")
     implementation("org.ktorm:ktorm-core:3.5.0")
-    implementation("org.xerial:sqlite-jdbc:3.39.3.0")
-    implementation("org.flywaydb:flyway-core:9.4.0")
-    implementation("io.github.microutils:kotlin-logging-jvm:3.0.0")
+    implementation("org.xerial:sqlite-jdbc:3.40.0.0")
+    implementation("org.flywaydb:flyway-core:9.10.2")
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
 
     // logging
-    implementation("org.slf4j:slf4j-api:2.0.1")
-    implementation("ch.qos.logback:logback-classic:1.4.3")
+    implementation("org.slf4j:slf4j-api:2.0.5")
+    implementation("ch.qos.logback:logback-classic:1.4.5")
 
     // Koin DI
-    implementation("io.insert-koin:koin-core:3.2.2")
+    implementation("io.insert-koin:koin-core:3.3.0")
     implementation("io.insert-koin:koin-ktor:3.2.2")
-    implementation("io.insert-koin:koin-annotations:1.0.3")
+    implementation("io.insert-koin:koin-annotations:1.1.0")
     implementation("io.insert-koin:koin-logger-slf4j:3.2.2")
-    ksp("io.insert-koin:koin-ksp-compiler:1.0.3")
+    ksp("io.insert-koin:koin-ksp-compiler:1.1.0")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-    testImplementation("io.insert-koin:koin-test:3.2.2")
-    testImplementation("io.insert-koin:koin-test-junit4:3.2.2")
+    testImplementation("io.insert-koin:koin-test:3.3.0")
+    testImplementation("io.insert-koin:koin-test-junit4:3.3.0")
 }
