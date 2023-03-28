@@ -17,6 +17,7 @@ import io.ktor.http.contentType
 import io.ktor.serialization.jackson.jackson
 import mu.KotlinLogging
 import org.koin.core.annotation.Single
+import org.koin.core.component.KoinComponent
 
 private val logger = KotlinLogging.logger {}
 
@@ -25,7 +26,7 @@ const val PAGE_PREVIEW_URL = "https://app.easy-feedback.com/api/pages/next"
 const val MEMBER_TOKEN_HEADER_Name = "X-Api-Member-Token"
 
 @Single
-class EasyFeedbackPreviewRepository {
+class EasyFeedbackPreviewRepository : KoinComponent {
 
     private val client = HttpClient(Apache) {
         install(ContentNegotiation) {
