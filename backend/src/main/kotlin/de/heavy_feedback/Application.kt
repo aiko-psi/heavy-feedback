@@ -1,10 +1,10 @@
 package de.heavy_feedback
 
+import de.heavy_feedback.plugins.KoinController
 import de.heavy_feedback.plugins.configureHTTP
 import de.heavy_feedback.plugins.configureRouting
 import de.heavy_feedback.plugins.configureSecurity
 import de.heavy_feedback.plugins.configureSerialization
-import de.heavy_feedback.surveyinfo.surveyInfoRoutes
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.application.install
@@ -46,6 +46,8 @@ fun Application.module() {
             call.respondText { "Yes it works!" }
         }
 
-        surveyInfoRoutes()
+        getKoin().getAll<KoinController>().forEach { controller ->
+            controller.apply { registerRoutes() }
+        }
     }
 }

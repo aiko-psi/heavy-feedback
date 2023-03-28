@@ -6,6 +6,8 @@ import io.ktor.server.application.install
 import io.ktor.server.locations.Locations
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import org.koin.core.component.KoinComponent
 
 fun Application.configureRouting() {
     install(Locations) {
@@ -22,3 +24,8 @@ fun Application.configureRouting() {
 }
 class AuthenticationException : RuntimeException()
 class AuthorizationException : RuntimeException()
+
+abstract class KoinController : KoinComponent {
+
+    abstract fun Route.registerRoutes()
+}
