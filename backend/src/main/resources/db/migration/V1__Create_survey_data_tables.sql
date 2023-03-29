@@ -1,15 +1,16 @@
 create table SURVEYS (
     ID int primary key,
-    title text
+    TITLE text
 );
 
 create table PAGES (
     ID int primary key,
     TITLE text,
-    pos int not null
+    POS int not null,
+    SURVEY_ID references SURVEYS(ID)
 );
 
-create table QUESTIONS (
+create table PAGE_ELEMENTS (
     ID int primary key,
     TYPE text not null,
     IS_REQUIRED boolean,
@@ -17,7 +18,7 @@ create table QUESTIONS (
     TITLE text not null,
     NOTE text,
     TOOLTIP text,
-    PAGE_ID references PAGEs(ID)
+    PAGE_ID references PAGES(ID)
 );
 
 
