@@ -3,7 +3,7 @@ package de.heavy_feedback.surveyinfo
 import de.heavy_feedback.AppModule
 import de.heavy_feedback.database.DatabaseConnector
 import de.heavy_feedback.getSimpleTestSurvey
-import de.heavy_feedback.utlis.resultLisHasError
+import de.heavy_feedback.utlis.resultListHasError
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -39,7 +39,7 @@ class SurveyInfoServiceTest : KoinTest {
         val testSurvey = getSimpleTestSurvey()
         runBlocking {
             val results = surveyInfoService.addOrUpdateSurveyInfoToDb(testSurvey)
-            val hasErrors = resultLisHasError(results)
+            val hasErrors = resultListHasError(results)
             assertFalse(hasErrors)
         }
     }

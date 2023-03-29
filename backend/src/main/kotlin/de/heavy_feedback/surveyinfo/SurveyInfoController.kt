@@ -2,7 +2,7 @@ package de.heavy_feedback.surveyinfo
 
 import de.heavy_feedback.plugins.KoinController
 import de.heavy_feedback.surveyinfo.dto.SurveyUrlDto
-import de.heavy_feedback.utlis.resultLisHasError
+import de.heavy_feedback.utlis.resultListHasError
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.locations.Location
@@ -25,7 +25,7 @@ class SurveyInfoController : KoinController() {
             val surveyInfoData = call.receive<SurveyUrlDto>()
 
             val results = surveyInfoService.refreshSurveyInfoFromEasyFeedback(surveyInfoData.url)
-            if (resultLisHasError(results)) {
+            if (resultListHasError(results)) {
                 call.respond(HttpStatusCode.BadRequest, results)
             } else {
                 call.respond(results)

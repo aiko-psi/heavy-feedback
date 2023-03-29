@@ -83,7 +83,7 @@ class EasyFeedbackPreviewRepositoryTest : KoinTest {
             Assume.assumeTrue(testInternet())
 
             val result = easyFeedbackPreviewRepository.getSurveyInfo(workingTestUrl!!)
-            // Test questionnaire has two pages at the moment
+            // Test questionnaire has eight pages at the moment
             assertEquals(8, result.pages.size)
         }
     }

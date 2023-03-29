@@ -19,4 +19,4 @@ fun evalResult(element: ResultElement, action: Action, func: () -> Int): ActionR
     }
 }
 
-fun resultLisHasError(results: List<ActionResult>): Boolean = results.map { it.result }.any { it.isFailure }
+fun resultListHasError(results: List<ActionResult>): Boolean = results.map { it.result }.any { it.isFailure }
