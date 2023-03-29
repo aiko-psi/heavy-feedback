@@ -1,6 +1,5 @@
 package de.heavy_feedback
 
-import de.heavy_feedback.plugins.KoinController
 import de.heavy_feedback.plugins.configureHTTP
 import de.heavy_feedback.plugins.configureRouting
 import de.heavy_feedback.plugins.configureSecurity
@@ -12,9 +11,7 @@ import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 import org.koin.ksp.generated.module
-import org.koin.ktor.ext.getKoin
 import org.koin.ktor.plugin.Koin
-import org.ktorm.database.Database
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -32,22 +29,14 @@ fun Application.module() {
         .toMap()
 
     install(Koin) {
+        // If the IDE does not like the module, try running gradle kspTestKotlin
         modules(AppModule().module)
         properties(configMap)
     }
 
-    // Connect database without DI, connection user and pw only for development db atm
-    val database = Database.connect(
-        "jdbc:sqlite:heavyfeedback.sqlite"
-    )
-
     routing {
         get("/") {
             call.respondText { "Yes it works!" }
-        }
-
-        getKoin().getAll<KoinController>().forEach { controller ->
-            controller.apply { registerRoutes() }
         }
     }
 }

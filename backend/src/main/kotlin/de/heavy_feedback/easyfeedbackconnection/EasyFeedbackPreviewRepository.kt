@@ -1,9 +1,9 @@
 package de.heavy_feedback.easyfeedbackconnection
 
-import de.heavy_feedback.easyfeedbackconnection.model.ContainerFromPreviewDAO
-import de.heavy_feedback.easyfeedbackconnection.model.PageFromPreviewDAO
-import de.heavy_feedback.easyfeedbackconnection.model.PreviewApiResponse
-import de.heavy_feedback.easyfeedbackconnection.model.SurveyInfoFromPreview
+import de.heavy_feedback.easyfeedbackconnection.dao.ContainerFromPreviewDAO
+import de.heavy_feedback.easyfeedbackconnection.dao.PreviewApiResponse
+import de.heavy_feedback.model.Page
+import de.heavy_feedback.model.Survey
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.apache.Apache
@@ -25,6 +25,11 @@ const val PREVIEW_IDENTIFIER = "vorschau"
 const val PAGE_PREVIEW_URL = "https://app.easy-feedback.com/api/pages/next"
 const val MEMBER_TOKEN_HEADER_Name = "X-Api-Member-Token"
 
+/**
+ * Repository to get survey information from easyfeedback through their preview api.
+ * Easyfeedback only has an api to get the question results. To get the question texts and option texts, we request
+ * every page of the questionnaire over the preview api. It is possible to decode the information from there.
+ */
 @Single
 class EasyFeedbackPreviewRepository : KoinComponent {
 
@@ -35,17 +40,19 @@ class EasyFeedbackPreviewRepository : KoinComponent {
         }
     }
 
-    suspend fun getSurveyInfo(surveyUrl: String): SurveyInfoFromPreview {
+    suspend fun getSurveyInfo(surveyUrl: String): Survey {
+        // To use the preview api, the url has to be transformed and an api token is needed.
         val previewUrl = convertToPreviewUrl(surveyUrl)
         val token = getApiToken(previewUrl)
 
         var hasNext = true
-        var pageList = listOf<PageFromPreviewDAO>()
+        var pageList = listOf<Page>()
         var surveyId: Int? = null
         var surveyTitle: String? = null
 
+        // Get all pages from the preview questionnaire
         while (hasNext) {
-            val container = getNextPage(token)
+            val container = getNextPageInfo(token)
             val page = container.process.page
             pageList = pageList.plus(page)
             hasNext = !page.isLastPage
@@ -58,7 +65,7 @@ class EasyFeedbackPreviewRepository : KoinComponent {
             throw error("SurveyId not found")
         }
 
-        return SurveyInfoFromPreview(
+        return Survey(
             id = surveyId,
             title = surveyTitle,
             pages = pageList
@@ -81,7 +88,10 @@ class EasyFeedbackPreviewRepository : KoinComponent {
             ?: throw error("Token not fount in content.")
     }
 
-    private suspend fun getNextPage(token: String): ContainerFromPreviewDAO {
+    /**
+     * Get next page information from preview api and parse it to container object
+     */
+    private suspend fun getNextPageInfo(token: String): ContainerFromPreviewDAO {
         val response: PreviewApiResponse = client.get(PAGE_PREVIEW_URL) {
             headers {
                 append(MEMBER_TOKEN_HEADER_Name, token)
