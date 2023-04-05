@@ -38,5 +38,10 @@ fun Application.module() {
         get("/") {
             call.respondText { "Yes it works!" }
         }
+
+        // Register all routes from every controller
+        getKoin().getAll<KoinController>().forEach { controller ->
+            controller.apply { registerRoutes() }
+        }
     }
 }
