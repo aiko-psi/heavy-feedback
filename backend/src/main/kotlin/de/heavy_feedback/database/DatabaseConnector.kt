@@ -15,7 +15,7 @@ class DatabaseConnector : KoinComponent {
      * Get database url either from ktor environment over koin or from koin environment for tests
      */
     private var databaseUrl: String = getKoin().getProperty<HashMap<String, String>>("database")?.get("url")
-        ?: getKoin().getProperty("databaseUrl") ?: ""
+        ?: ""
 
     var db: Database = Database.connect(databaseUrl)
 
