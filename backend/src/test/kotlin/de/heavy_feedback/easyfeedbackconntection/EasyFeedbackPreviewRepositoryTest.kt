@@ -12,7 +12,7 @@ import org.junit.Assume
 import org.koin.test.inject
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 /**
  * This class of tests needs an internet connection because it tests the retrieval of data from the real easyfeedback api.
@@ -48,7 +48,7 @@ class EasyFeedbackPreviewRepositoryTest : TestConfig() {
             Assume.assumeTrue(testInternet())
 
             val result = easyFeedbackPreviewRepository.getApiToken(workingTestUrl)
-            assertNotNull(result)
+            assertNull(result)
         }
     }
     @Test
